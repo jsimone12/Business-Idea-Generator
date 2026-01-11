@@ -1,0 +1,17 @@
+{
+  "name": "wealth-lab-business-generator",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "lucide-react": "0.263.1",
+    "next": "14.0.4",
+    "pdf-lib": "^1.17.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}
