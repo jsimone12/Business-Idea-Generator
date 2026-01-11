@@ -2,6 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).end();
   }
+const { pdfUrl } = req.body;
 
   try {
     const ghlRes = await fetch(
@@ -10,8 +11,10 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-  ...req.body
+  ...req.body,
+  pdfUrl
 })
+
 
       }
     );

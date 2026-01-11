@@ -1,16 +1,14 @@
+import { put } from '@vercel/blob';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).end();
-  }
+  if (req.method !== 'POST') return res.status(405).end();
 
-  const { businessIdeas } = req.body;
+  const { businessIdeas, email } = req.body;
 
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage();
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
   const { width, height } = page.getSize();
 
   page.drawText(businessIdeas || '', {
@@ -24,7 +22,11 @@ export default async function handler(req, res) {
 
   const pdfBytes = await pdfDoc.save();
 
-  res.setHeader('Content-Type', 'application/pdf');
-  res.setHeader('Content-Disposition', 'attachment; filename=business-ideas.pdf');
-  res.send(Buffer.from(pdfBytes));
+  const blob = await put(
+    `business-ideas-${Date.now()}.pdf`,
+    Buffer.from(pdfBytes),
+    { access: 'public' }
+  );
+
+  res.status(200).json({ pdfUrl: blob.url });
 }

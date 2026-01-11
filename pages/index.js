@@ -124,11 +124,7 @@ IMPORTANT:
 
       const data = await response.json();
       setBusinessIdeas(data.ideas);
-      const pdfRes = await fetch('/api/generatePdf', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ businessIdeas: data.ideas })
-});
+      
 
 const pdfBlob = await pdfRes.blob();
 const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -161,6 +157,7 @@ const pdfUrl = URL.createObjectURL(pdfBlob);
       setLoading(false);
     }
   };
+
 
   const canProceed = () => {
     return answers.q1 && answers.q2 && answers.q3 && answers.q4 && 
@@ -739,6 +736,7 @@ const pdfUrl = URL.createObjectURL(pdfBlob);
               return <p key={idx} style={{ marginBottom: '16px' }}>{line}</p>;
             })}
           </div>
+
 
           <div style={{
             marginTop: '48px',
