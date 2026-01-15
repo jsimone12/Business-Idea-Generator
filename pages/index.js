@@ -765,7 +765,7 @@ const pdfUrl = URL.createObjectURL(pdfBlob);
             </p>
 
             <a
-              href="https://calendly.com/jsimonesolutions/business-ideas-brainstorming"
+              href="https://api.leadconnectorhq.com/widget/bookings/business-ideas-brainstorming"
               target="_blank"
               rel="noopener noreferrer"
               style={{
