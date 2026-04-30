@@ -166,7 +166,8 @@ await emailjs.send(SERVICE_ID, 'template_o8tg7rz', {
 
       setStep('results');
     } catch (error) {
-      console.error('Error generating ideas:', error);
+      console.error('Error generating ideas:', error.message || error);
+alert('Debug error: ' + (error.message || JSON.stringify(error)));
       alert('Something went wrong. Please try again.');
       setStep('questions');
     } finally {
