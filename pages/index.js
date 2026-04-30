@@ -129,7 +129,20 @@ IMPORTANT:
       });
 
       const data = await response.json();
-      setBusinessIdeas(data.ideas);
+      const profile = `CLIENT PROFILE:
+- Name: ${userInfo.fname} ${userInfo.lname}
+- Dream activity: ${answers.q1}
+- Biggest frustration: ${answers.q2}
+- Professional enjoyment: ${answers.q3}
+- What people ask for help with: ${answers.q4}
+- Time available: ${answers.q5}
+- Success vision: ${answers.q6}
+- Most important in next chapter: ${answers.q7.join(', ')}
+
+---
+
+`;
+setBusinessIdeas(profile + data.ideas);
       
 
 // TEMP: EmailJS workaround while GHL is inactive
@@ -140,7 +153,7 @@ const PUBLIC_KEY = 'nqDcMPEGBKUEzopfy';
 await emailjs.send(SERVICE_ID, 'template_ke8l9ie', {
   to_email: userInfo.email,
   to_name: userInfo.fname,
-  business_ideas: data.ideas
+  business_ideas: profile + data.ideas
 }, PUBLIC_KEY);
 
 await emailjs.send(SERVICE_ID, 'template_o8tg7rz', {
@@ -154,7 +167,7 @@ await emailjs.send(SERVICE_ID, 'template_o8tg7rz', {
   question5: answers.q5,
   question6: answers.q6,
   question7: answers.q7.join(', '),
-  business_ideas: data.ideas
+  business_ideas: profile + data.ideas
 }, PUBLIC_KEY);
 
 // await fetch('/api/sendToGHL', {
