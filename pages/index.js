@@ -186,7 +186,99 @@ alert('Debug error: ' + (error.message || JSON.stringify(error)));
     return answers.q1 && answers.q2 && answers.q3 && answers.q4 && 
            answers.q5 && answers.q6 && answers.q7.length > 0;
   };
-
+if (step === 'intake') {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom right, #FDF9ED, #f5f0e0, #FDF9ED)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '24px'
+      }}>
+        <style jsx global>{`body { margin: 0; padding: 0; }`}</style>
+        <div style={{
+          maxWidth: '672px',
+          width: '100%',
+          backgroundColor: '#0A1F33',
+          borderRadius: '16px',
+          boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+          padding: '48px'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+            <Sparkles style={{ width: '64px', height: '64px', color: '#C8A15A' }} />
+          </div>
+          <h1 style={{
+            fontSize: '36px',
+            color: '#FDF9ED',
+            textAlign: 'center',
+            marginBottom: '16px',
+            fontFamily: 'Montserrat, sans-serif',
+            fontWeight: 600
+          }}>
+            Let's Get Started
+          </h1>
+          <p style={{
+            fontSize: '18px',
+            color: '#FDF9ED',
+            textAlign: 'center',
+            marginBottom: '32px',
+            fontFamily: 'DM Sans, sans-serif',
+            opacity: 0.8
+          }}>
+            Enter your info below so we can send your personalized business ideas straight to your inbox.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[
+              { key: 'fname', placeholder: 'First Name' },
+              { key: 'lname', placeholder: 'Last Name' },
+              { key: 'email', placeholder: 'Email Address' },
+              { key: 'phone', placeholder: 'Phone Number' }
+            ].map(field => (
+              <input
+                key={field.key}
+                type="text"
+                placeholder={field.placeholder}
+                value={userInfo[field.key]}
+                onChange={(e) => setUserInfo(prev => ({ ...prev, [field.key]: e.target.value }))}
+                style={{
+                  width: '100%',
+                  border: '2px solid #B7C7B3',
+                  borderRadius: '8px',
+                  padding: '16px',
+                  backgroundColor: '#FDF9ED',
+                  color: '#0A1F33',
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '16px',
+                  boxSizing: 'border-box'
+                }}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => {
+              if (userInfo.fname && userInfo.email) setStep('welcome');
+            }}
+            style={{
+              width: '100%',
+              backgroundColor: userInfo.fname && userInfo.email ? '#C8A15A' : '#ccc',
+              color: '#FDF9ED',
+              fontWeight: 600,
+              padding: '16px 24px',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '18px',
+              cursor: userInfo.fname && userInfo.email ? 'pointer' : 'not-allowed',
+              marginTop: '24px',
+              fontFamily: 'Montserrat, sans-serif'
+            }}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  }
   if (step === 'welcome') {
     return (
       <div style={{
