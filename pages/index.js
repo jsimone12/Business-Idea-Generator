@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, ArrowRight, Clock, Target, TrendingUp } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 export default function BusinessIdeaGenerator() {
-  const [step, setStep] = useState('welcome');
+  const [step, setStep] = useState(() => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('email')) return 'welcome';
+  }
+  return 'intake';
+});
   const [userInfo, setUserInfo] = useState({ fname: '', lname: '', email: '', phone: '' });
   const [loading, setLoading] = useState(false);
   const [answers, setAnswers] = useState({
