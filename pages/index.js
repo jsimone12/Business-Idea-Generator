@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, ArrowRight, Clock, Target, TrendingUp } from 'lucide-react';
-
+import emailjs from '@emailjs/browser';
 export default function BusinessIdeaGenerator() {
   const [step, setStep] = useState('welcome');
   const [userInfo, setUserInfo] = useState({ fname: '', lname: '', email: '', phone: '' });
@@ -126,27 +126,43 @@ IMPORTANT:
       setBusinessIdeas(data.ideas);
       
 
-const pdfBlob = await pdfRes.blob();
-const pdfUrl = URL.createObjectURL(pdfBlob);
+// TEMP: EmailJS workaround while GHL is inactive
+// TO RESTORE GHL: delete the emailjs block below and uncomment the sendToGHL fetch
+const SERVICE_ID = 'service_31uw8mo';
+const PUBLIC_KEY = 'nqDcMPEGBKUEzopfy';
 
-      await fetch('/api/sendToGHL', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    firstName: userInfo.fname,
-    lastName: userInfo.lname,
-    email: userInfo.email,
-    phone: userInfo.phone,
-    question1: answers.q1,
-    question2: answers.q2,
-    question3: answers.q3,
-    question4: answers.q4,
-    question5: answers.q5,
-    question6: answers.q6,
-    question7: answers.q7,
-    businessIdeas: data.ideas
-  })
-});
+await emailjs.send(SERVICE_ID, 'template_ke8l9ie', {
+  to_email: userInfo.email,
+  to_name: userInfo.fname,
+  business_ideas: data.ideas
+}, PUBLIC_KEY);
+
+await emailjs.send(SERVICE_ID, 'template_o8tg7rz', {
+  client_name: `${userInfo.fname} ${userInfo.lname}`,
+  client_email: userInfo.email,
+  client_phone: userInfo.phone,
+  question1: answers.q1,
+  question2: answers.q2,
+  question3: answers.q3,
+  question4: answers.q4,
+  question5: answers.q5,
+  question6: answers.q6,
+  question7: answers.q7.join(', '),
+  business_ideas: data.ideas
+}, PUBLIC_KEY);
+
+// await fetch('/api/sendToGHL', {
+//   method: 'POST',
+//   headers: { 'Content-Type': 'application/json' },
+//   body: JSON.stringify({
+//     firstName: userInfo.fname, lastName: userInfo.lname,
+//     email: userInfo.email, phone: userInfo.phone,
+//     question1: answers.q1, question2: answers.q2,
+//     question3: answers.q3, question4: answers.q4,
+//     question5: answers.q5, question6: answers.q6,
+//     question7: answers.q7, businessIdeas: data.ideas
+//   })
+// });
 
       setStep('results');
     } catch (error) {

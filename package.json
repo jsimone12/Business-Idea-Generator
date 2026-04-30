@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@vercel/blob": "^2.0.0",
     "lucide-react": "0.263.1",
     "next": "14.0.4",
