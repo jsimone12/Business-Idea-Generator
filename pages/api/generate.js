@@ -21,6 +21,17 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      console.error('Anthropic API error:', response.status, JSON.stringify(data));
+      return res.status(502).json({ error: 'AI service error', detail: data.error?.message || 'Unknown error' });
+    }
+
+    if (!data.content || !data.content[0] || !data.content[0].text) {
+      console.error('Unexpected Anthropic response shape:', JSON.stringify(data));
+      return res.status(502).json({ error: 'Unexpected AI response format' });
+    }
+
     const generatedText = data.content[0].text;
 
     res.status(200).json({ ideas: generatedText });
